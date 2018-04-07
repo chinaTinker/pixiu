@@ -11,8 +11,10 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/report', (req, res) => {
+  const query = req.query;  
+
   reporter
-    .simple()
+    .simple(query.startDate, query.endDate)
     .then(data => {
       res.json(data);
     })

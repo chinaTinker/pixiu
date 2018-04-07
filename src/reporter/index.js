@@ -1,8 +1,11 @@
 'use strict';
 
 const db = require('../db');
+const simple = require('./simple');
 
-exports.simple = (fromDate, endDate) => {
+exports.simple = simple.report;
+
+exports.simpleBySql = (fromDate, endDate) => {
   if (!fromDate) {
     fromDate = new Date();
     fromDate.setMonth(fromDate.getMonth() - 1);
@@ -31,7 +34,11 @@ exports.simple = (fromDate, endDate) => {
         return reject(err);
       }
 
-      return resolve(row);
+      return resolve({
+        fromDate: fromDate,
+        endDate: endDate,
+        data: row,
+      });
     });
   });
 };
