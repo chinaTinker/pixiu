@@ -17,7 +17,14 @@ const cal = (rows) => {
     data[crrName].avg_price = data[crrName].total_amount / data[crrName].count;
   }
 
-  return data;
+  const dataArray = [];
+  for (let key of Object.keys(data)) {
+    let crrData = data[key];
+    crrData.name = key;
+    dataArray.push(crrData);
+  }
+
+  return dataArray;
 };
 
 exports.report = (fromDate, endDate) => {
