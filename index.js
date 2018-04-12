@@ -24,8 +24,21 @@ app.get('/report', (req, res) => {
     });
 });
 
-app.get('/', (req, res) => {
-  res.render('index', {});
+app.get('/report/daily', (req, res) => {
+  let date = req.query.date;
+  if (!date) {
+    let date = new Date();
+    date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`;
+  }
+
+  reporter
+    .daily(date)
+    .then(data => {
+      res.json(data)
+    })
+    .catch(ex => {
+      res.json(ex);
+    });
 });
 
 

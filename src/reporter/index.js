@@ -2,8 +2,10 @@
 
 const db = require('../db');
 const simple = require('./simple');
+const daily = require('./daily');
 
 exports.simple = simple.report;
+exports.daily = daily.report;
 
 exports.simpleBySql = (fromDate, endDate) => {
   if (!fromDate) {
