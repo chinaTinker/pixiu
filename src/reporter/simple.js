@@ -21,6 +21,9 @@ const cal = (rows) => {
   for (let key of Object.keys(data)) {
     let crrData = data[key];
     crrData.name = key;
+    crrData.count = crrData.count.toFixed(2);
+    crrData.total_amount = crrData.total_amount.toFixed(2);
+    crrData.avg_price = crrData.avg_price.toFixed(2);
     dataArray.push(crrData);
   }
 

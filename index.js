@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 
 const reporter = require('./src/reporter');
+const info = require('./src/info/stealDailyInfo');
 
 app.set('views', __dirname +'/views');
 app.set('view engine', 'ejs');
@@ -27,5 +28,16 @@ app.get('/', (req, res) => {
   res.render('index', {});
 });
 
+
+app.get('/info/daily', (req, res) => {
+  info
+    .get()
+    .then(data => {
+      res.json(data);
+    })
+    .catch(ex => {
+      res.json(ex);
+    });
+});
 
 app.listen(7001);
