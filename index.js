@@ -40,7 +40,21 @@ app.get('/report/monthly', (req, res) => {
   const endDate = getDate(null, month, null);
 
   reporter
-    .simple(query.startDate, query.endDate)
+    .simple(startDate, endDate)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
+app.get('/report/annual', (req, res) => {
+  const startDate = getDate(null, 1, 1);
+  const endDate = getDate();
+
+  reporter
+    .simple(startDate, endDate)
     .then(data => {
       res.json(data);
     })
