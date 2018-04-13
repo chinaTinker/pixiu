@@ -2,6 +2,19 @@
 
 const db = require('../db');
 
+const counter = (arr, key) => {
+  if (!arr || !arr.length) {
+    return 0;
+  }
+
+  let total = 0;
+  for (let data of arr) {
+    total += data[key];
+  }
+
+  return total;
+}
+
 const income = (date) => {
   return new Promise((resolve, reject) => {
     const sql = 'select * from income_record where date = ?';
@@ -10,7 +23,10 @@ const income = (date) => {
         return (err);
       }      
 
-      return resolve(rows);
+      return resolve({
+        in: rows,
+        in_total_amount: counter(rows, 'amount')
+      });
     });
   });
 };
@@ -23,7 +39,11 @@ const outcome = (date) => {
         return reject(err);
       }
 
-      return resolve(rows);
+      rows = rows || [];
+      return resolve({
+        out: rows,
+        out_total_amount: counter(rows, 'amont')
+      });
     });
   });
 };
@@ -32,10 +52,7 @@ exports.report = (date) => {
   return Promise
     .all([income(date), outcome(date)])
     .then(datas => {      
-      return {
-        in: datas[0],
-        out: datas[1],
-      };
+      return Object.assign({}, datas[0], datas[1]);
     })
     .catch(ex => {
       console.log(ex);
