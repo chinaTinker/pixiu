@@ -7,6 +7,16 @@ const app = express();
 const reporter = require('./src/reporter');
 const info = require('./src/info/stealDailyInfo');
 
+const getDate = (year, month, day) => {
+  const now = new Date();
+  
+  year = year || now.getFullYear();
+  month = month || now.getMonth();
+  day = day || now.getDay();
+
+  return `${year}-${month}-${day}`;
+};
+
 app.set('views', __dirname +'/views');
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -24,12 +34,23 @@ app.get('/report', (req, res) => {
     });
 });
 
+app.get('/report/monthly', (req, res) => {
+  const month = req.query.month || now.getMonth();
+  const startDate = getDate(null, month, 1);
+  const endDate = getDate(null, month, null);
+
+  reporter
+    .simple(query.startDate, query.endDate)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
 app.get('/report/daily', (req, res) => {
-  let date = req.query.date;
-  if (!date) {
-    let date = new Date();
-    date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}`;
-  }
+  let date = req.query.date || getDate();
 
   reporter
     .daily(date)
