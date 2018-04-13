@@ -12,7 +12,7 @@ const getDate = (year, month, day) => {
   
   year = year || now.getFullYear();
   month = month || now.getMonth() + 1;
-  day = day || now.getDay();
+  day = day || now.getDate();
 
   return `${year}-${month}-${day}`;
 };
