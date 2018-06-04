@@ -35,7 +35,7 @@ app.get('/report', (req, res) => {
 });
 
 app.get('/report/monthly', (req, res) => {
-  const month = req.query.month;
+  const month = req.query.month || new Date().getMonth() + 1;
   const startDate = getDate(null, month, 1);
   const endDate = getDate(null, month + 1, 1);
 
