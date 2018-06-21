@@ -4,6 +4,7 @@ const db = require('../db');
 
 exports.saveInfo = (req) => {
   const ip = req.ip;
+  const para = req.query;
   
   return new Promise((resolve, reject) => {
     const sql = `
@@ -13,7 +14,7 @@ exports.saveInfo = (req) => {
         (?, ?, ?, ?)
     `;
 
-    db.query(sql, [ip, '', '', 'HK'], (err, res) => {
+    db.query(sql, [ip, para.longitude || '', para.latitude || '', 'HangZhou'], (err, res) => {
       if (err) {
         return reject(err);
       }

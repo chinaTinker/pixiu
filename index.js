@@ -3,6 +3,7 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+var bodyParser = require('body-parser');
 
 const reporter = require('./src/reporter');
 const info = require('./src/info/stealDailyInfo');
@@ -91,7 +92,7 @@ app.get('/info/daily', (req, res) => {
 });
 
 app.get('/joks', (req, res) => {
-  visitor.saveInfo(req);
+  //visitor.saveInfo(req);
 
   jok
     .random()
@@ -112,6 +113,11 @@ app.get('/jok/random', (req, res) => {
     .catch(ex => {
       res.json({error: 1});
     });
+});
+
+app.get('/visit', (req, res) => {
+  visitor.saveInfo(req);
+  res.json({success: 1});
 });
 
 app.listen(7001);
