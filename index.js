@@ -6,6 +6,7 @@ const app = express();
 
 const reporter = require('./src/reporter');
 const info = require('./src/info/stealDailyInfo');
+const jok = require('./src/jok')
 
 const getDate = (year, month, day) => {
   const now = new Date();
@@ -85,6 +86,17 @@ app.get('/info/daily', (req, res) => {
     })
     .catch(ex => {
       res.json(ex);
+    });
+});
+
+app.get('/joks', (req, res) => {
+  jok
+    .random()
+    .then(data => {
+      res.render('joks', {jok: data[0]});
+    })
+    .catch(ex => {
+      res.json({error: 1});
     });
 });
 
