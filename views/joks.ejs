@@ -9,7 +9,12 @@
       <p><%- jok.content %></p>
     </div>
     <div>
-      <button class="btn_more">再看一个</button>
+      <button class="btn_more" onclick="readMore()">再看一个</button>
     </div>
   </body>
+  <script type="text/javascript">
+    function readMore() {
+      location.reload();
+    };
+  </script>
 </html>
