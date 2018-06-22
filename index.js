@@ -95,7 +95,7 @@ app.get('/joks', (req, res) => {
   //visitor.saveInfo(req);
 
   jok
-    .random()
+    .get()
     .then(data => {
       res.render('joks', {jok: data[0]});
     })
@@ -109,6 +109,21 @@ app.get('/jok/random', (req, res) => {
     .random()
     .then(arr => {
       res.json(arr[0]);
+    })
+    .catch(ex => {
+      res.json({error: 1});
+    });
+});
+
+app.get('/jok/:id', (req, res) => {
+  jok
+    .get(req.params.id)
+    .then(arr => {
+      if (arr.length > 0) {
+        res.json(arr[0]);
+      } else {
+        res.json({error: 1});
+      }
     })
     .catch(ex => {
       res.json({error: 1});

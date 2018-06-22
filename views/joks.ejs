@@ -11,7 +11,7 @@
   <body>
     <div class="jok">
       <% if (jok) {%>
-        <%- jok.content %>
+        <div id="jok" data-id="<%= jok.id%>"><%- jok.content %></div>
       <% } else {%>
         <p>看到这个了？阿里小蜜欢迎你，java，node，前端，什么都要的！</p>
         <p>mail: xuyifeng@aliyun.com</p>
@@ -24,9 +24,19 @@
   <script type="text/javascript">    
     (function() {
       $('.btn_more').click(() => {
-        $.get('/jok/random', data => {
+        let id = parseInt($('#jok').data('id')) + 1;
+
+        $.get(`/jok/${id}`, data => {
           if (data && !data.error) {
-            $('div.jok').html(data.content);
+            $('#jok').html(data.content);
+            $('#jok').data('id', data.id); 
+          } else {
+            $('#jok').html(`
+              <p>看到这个了？阿里小蜜欢迎你，java，node，前端，什么都要的！</p>
+              <p>mail: xuyifeng@aliyun.com</p>`);
+            $('#jok').data('id', null);
+            //$('.btn_more').attr('disabled', true).css('background-color', '#DCDCDC');
+            $('.btn_more').remove();
           }
         })
       });
