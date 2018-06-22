@@ -8,6 +8,7 @@ exports.random = () => {
   const query = `
     select * from jok 
       where id > (select rand()*max(id) from jok)
+      and enable = 1
     order by id limit 1
   `;
   return new Promise((resolve, reject) => {

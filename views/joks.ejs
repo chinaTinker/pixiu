@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>小小笑笑</title>
+    <title>阿里内部经典语录</title>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -10,7 +10,12 @@
   </head>
   <body>
     <div class="jok">
-      <%- jok.content %>
+      <% if (jok) {%>
+        <%- jok.content %>
+      <% } else {%>
+        <p>看到这个了？阿里小蜜欢迎你，java，node，前端，什么都要的！</p>
+        <p>mail: xuyifeng@aliyun.com</p>
+      <% }%>
     </div>
     <div>
       <button class="btn_more">再看一个</button>
