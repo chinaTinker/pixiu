@@ -121,3 +121,5 @@ app.get('/visit', (req, res) => {
 });
 
 app.listen(7001);
+
+console.log('app listen on 7001');
