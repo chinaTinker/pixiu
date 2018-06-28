@@ -20,6 +20,7 @@ const getDate = (year, month, day) => {
   return `${year}-${month}-${day}`;
 };
 
+app.set('trust proxy', true);
 app.set('views', __dirname +'/views');
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
