@@ -9,6 +9,7 @@ const reporter = require('./src/reporter');
 const info = require('./src/info/stealDailyInfo');
 const jok = require('./src/jok')
 const visitor = require('./src/visitor');
+const dispath = require('./src/dispath');
 
 const getDate = (year, month, day) => {
   const now = new Date();
@@ -134,6 +135,26 @@ app.get('/jok/:id', (req, res) => {
 app.get('/visit', (req, res) => {
   visitor.saveInfo(req);
   res.json({success: 1});
+});
+
+// 分发信息
+app.get('/dispath', (req, res) => {
+
+  // TODO
+
+  res.render('dispath', {});
+});
+
+// 保存分发信息
+app.get('/dispath/info', (req, res) => {
+  dispath
+    .saveInfo(req.query)
+    .then(result => {
+      res.json({success: 1});
+    })
+    .catch(ex => {
+      res.json({success: 0});
+    });
 });
 
 app.listen(7001);
