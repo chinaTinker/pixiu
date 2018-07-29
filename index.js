@@ -10,6 +10,8 @@ const info = require('./src/info/stealDailyInfo');
 const jok = require('./src/jok')
 const visitor = require('./src/visitor');
 const dispath = require('./src/dispath');
+const ad = require('./src/ad');
+
 
 const getDate = (year, month, day) => {
   const now = new Date();
@@ -94,13 +96,24 @@ app.get('/info/daily', (req, res) => {
 });
 
 app.get('/joks', (req, res) => {
-  //visitor.saveInfo(req);
+  ad
+    .getActiveAds()
+    .then(ads => {
+      return {view: 'ad', ad: ads[0]};
+    })
+    .catch(ex => {      
+      console.log(ex);
 
-
-  jok
-    .get()
+      return jok.get().then(joks => {
+        return {view: 'joks', jok: joks[0]};
+      });
+    })
     .then(data => {
-      res.render('joks', {jok: data[0]});
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>');
+      console.log(data);
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>');
+
+      res.render(data.view, data);
     })
     .catch(ex => {
       res.json({error: 1});
