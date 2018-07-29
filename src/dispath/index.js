@@ -43,7 +43,7 @@ exports.getInfo = () => {
   return new Promise((resolve, reject) => {
     const sql = `
       SELECT 
-        count(DISTINCT NAME) AS merchantCount,
+        count(DISTINCT NAME, phone) AS merchantCount,
         sum(day_flow) AS summaryDayFlow,
           sum(sale_amount) AS summarySaleAmount
       FROM dispath_info
