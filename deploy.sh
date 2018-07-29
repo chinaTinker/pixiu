@@ -1,6 +1,6 @@
-!# /bin/bash
+#! /bin/bash
 
-cd pixiu
+cd ~/pixiu
 
 echo "merge the newest code."
 
@@ -14,7 +14,7 @@ echo "ready to kill the node processes ... ..."
 
 killall node
 
-sleep 500
+sleep 5
 
 nohup npm start > a.out &
 
