@@ -23,3 +23,19 @@ exports.saveInfo = (req) => {
     })
   });
 };
+
+exports.getVisitCount = () => {
+  return new Promise((resolve, reject) => {
+    const sql = `select count(id) as visitCount from visit_record`;
+    db.query(sql, (err, res) => {
+      if (err) {
+        return reject(err);
+      }
+
+      if (!res || !res.length) {
+        return resolve({visitCount: 0});
+      }
+      return resolve(res[0]);
+    });
+  });
+};

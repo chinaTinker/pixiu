@@ -157,6 +157,22 @@ app.get('/dispath/info', (req, res) => {
     });
 });
 
+app.get('/dispath/info/summary', (req, res) => {
+  Promise
+    .all([dispath.getInfo(), visitor.getVisitCount()])
+    .then(result => {
+      let data = result[0];
+      data.visitCount = result[1].visitCount || 0;
+      return data;
+    })
+    .then(data => {
+      res.json({success: 1, data: data})
+    })
+    .catch(ex => {
+      res.json({success: 0, error: ex});
+    });
+});
+
 app.listen(7001);
 
 console.log('app listen on 7001');
