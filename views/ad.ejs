@@ -24,5 +24,48 @@
       <!-- TODO -->
     </div>
   </body>
-  
+  <script type="text/javascript">    
+    (function() {
+      function uploadInfo(position) {
+        const coords = position.coords;
+        const data = {
+          longitude: coords.longitude,
+          latitude: coords.latitude
+        };
+
+        $.get('visit', data, res => {
+          // do nothing
+        });
+      };
+
+      function onerror(err) {        
+        err = err || {};
+
+        let errInfo = 'unknown';
+        switch(err.code) {
+          case err.PERMISSION_DENIED:
+            errInfo = 'PERMISSION_DENIED';
+            break;
+          case err.POSITION_UNAVAILABLE:
+            errInfo = 'POSITION_UNAVAILABLE';
+            break;          
+        }
+
+        const data = {
+          longitude: errInfo,
+          latitude: errInfo
+        };
+
+        $.get('visit', data, res => {
+          // do nothing
+        });
+      }
+      
+      if (navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(uploadInfo, onerror);
+        console.log(1);
+      }
+
+    })();
+  </script>
 </html>
