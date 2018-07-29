@@ -96,6 +96,7 @@ app.get('/info/daily', (req, res) => {
 app.get('/joks', (req, res) => {
   //visitor.saveInfo(req);
 
+
   jok
     .get()
     .then(data => {
