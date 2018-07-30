@@ -19,11 +19,7 @@ exports.getLocation = (ip) => {
       });
 
       res.on('end', () => {
-        try {
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>');
-          console.log(rawData);
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>');
-
+        try {          
           let jsonData = JSON.parse(rawData);
           let data = jsonData.data;
           if (!data) {
