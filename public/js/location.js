@@ -1,16 +1,19 @@
 // 记录用户的访问记录
 // 包括经纬度
 (function() {
-  function uploadInfo(position) {
-    const coords = position.coords;
+  function keepVisit(longitude, latitude) {
     const data = {
-      longitude: coords.longitude,
-      latitude: coords.latitude
+      longitude: longitude,
+      latitude: latitude
     };
-
     $.get('visit', data, res => {
       // do nothing
     });
+  }
+
+  function uploadInfo(position) {
+    const coords = position.coords || {};    
+    keepVisit(coords.longitude, coords.latitude);
   };
 
   function onerror(err) {        
@@ -26,18 +29,13 @@
         break;          
     }
 
-    const data = {
-      longitude: errInfo,
-      latitude: errInfo
-    };
-
-    $.get('visit', data, res => {
-      // do nothing
-    });
+    keepVisit(errInfo, errInfo);
   }
   
   if (navigator && navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(uploadInfo, onerror);
+  } else {
+    keepVisit('NOT_SUPPORTED', 'NOT_SUPPORTED');
   }
 
 })();

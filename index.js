@@ -108,11 +108,7 @@ app.get('/joks', (req, res) => {
         return {view: 'joks', jok: joks[0]};
       });
     })
-    .then(data => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>');
-      console.log(data);
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>');
-
+    .then(data => {      
       res.render(data.view, data);
     })
     .catch(ex => {
