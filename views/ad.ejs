@@ -16,6 +16,14 @@
         <img src="<%= ad.content %>" width="100%" style="background-color: white"/>
       <%} else if (ad.type === 3) {%>
         <div><%- ad.content %></div>
+      <%} else if (ad.type === 4) {%>
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1533018247144&di=aae386e841be28b898a5be1a93f2da98&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F013706554baff0000001bf726ee29c.jpg" width="100%" style="background-color: white"/>
+        <div style="text-align: center">跳转中...</div>
+        <script type="text/javascript">
+          setTimeout(() => {
+            window.location.replace('<%=ad.content%>')  
+          }, 5000);
+        </script>      
       <%} else {%>
         <div><%= ad.content %></div>
       <%}%>
