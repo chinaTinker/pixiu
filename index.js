@@ -162,8 +162,8 @@ app.get('/dispath/info', (req, res) => {
     .then(result => {
       res.json({success: 1});
     })
-    .catch(ex => {
-      res.json({success: 0});
+    .catch(ex => {      
+      res.json({success: 0, ex: ex.message});
     });
 });
 
@@ -178,8 +178,9 @@ app.get('/dispath/info/summary', (req, res) => {
     .then(data => {
       res.json({success: 1, data: data})
     })
-    .catch(ex => {
-      res.json({success: 0, error: ex});
+    .catch(ex => {  
+      console.log(ex);    
+      res.json({success: 0, error: ex.message});
     });
 });
 

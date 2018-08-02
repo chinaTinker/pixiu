@@ -21,21 +21,46 @@ const checkData = data => {
   return Promise.resolve(valueArr);
 }
 
+exports.isExisted = (name, phone, addr) => {  
+  return new Promise((resolve, reject) => {
+    const sql = `
+      select 1 as tag from dispath_info 
+      where name = ? and phone = ? and address = ?`;
+
+    db.query(sql, [name, phone, addr], (err, rows) => {
+      if (err) {
+        return reject(err);
+      }
+
+      let row = rows[0] || {}; 
+      resolve(!!row.tag);
+    });
+  });
+};
+
 exports.saveInfo = (data) => {
-  return checkData(data)
-    .then(valueArr => {
-      const sql = `
-        insert into dispath_info(name, phone, day_flow, address, sale_amount)
-        value(?, ?, ?, ?, ?)
-      `;
+  return this.isExisted(data.name, data.phoneNo, data.address)
+    .then(x => {
+      if (x) {
+        throw new Error('data existed');
+      }
 
-      db.query(sql, valueArr, (err, res) => {
-        if (err) {
-          throw new Error('failed to save db');
-        }
+      return checkData(data)
+        .then(valueArr => {
+          const sql = `
+            insert into dispath_info(name, phone, day_flow, address, sale_amount)
+            value(?, ?, ?, ?, ?)
+          `;
 
-        return true;
-      });
+          db.query(sql, valueArr, (err, res) => {
+            if (err) {
+              throw new Error('failed to save db');
+            }
+
+            return true;
+          });
+          return true;
+        });
     });
 };
 
